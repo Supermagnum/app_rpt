@@ -1,6 +1,8 @@
 # app_rpt
 **Refactoring and upgrade of AllStarLink's app_rpt, etc.**
 
+This branch includes **gr-linux-crypto authentication support** for cryptographic verification of remote repeater management commands using Brainpool ECC and Linux kernel keyring.
+
 ## Documentation
 
 - **[Authentication with gr-linux-crypto](docs/AUTHENTICATION.md)** - Cryptographic authentication for remote repeater management
