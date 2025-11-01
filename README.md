@@ -1,6 +1,10 @@
 # app_rpt
 **Refactoring and upgrade of AllStarLink's app_rpt, etc.**
 
+## Documentation
+
+- **[Authentication with gr-linux-crypto](docs/AUTHENTICATION.md)** - Cryptographic authentication for remote repeater management
+
 # Debugging and Submitting Bugs
 
 Feel free to open an issue for *any* trouble you might be experiencing with these modules. Please try to adhere to the following when submitting bugs:

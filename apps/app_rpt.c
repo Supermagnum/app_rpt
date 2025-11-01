@@ -321,6 +321,9 @@
 #include "app_rpt/rpt_cli.h"
 #include "app_rpt/rpt_bridging.h"
 #include "app_rpt/rpt_call.h"
+#ifdef HAVE_GRLINUXCRYPTO
+#include "app_rpt/rpt_authentication.h"
+#endif
 #include "app_rpt/rpt_capabilities.h"
 #include "app_rpt/rpt_vox.h"
 #include "app_rpt/rpt_serial.h" /* use serial_rxflush, serial_rxready */

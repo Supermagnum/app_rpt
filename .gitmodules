@@ -1,0 +1,3 @@
+[submodule "contrib/gr-linux-crypto"]
+	path = contrib/gr-linux-crypto
+	url = https://github.com/Supermagnum/gr-linux-crypto.git

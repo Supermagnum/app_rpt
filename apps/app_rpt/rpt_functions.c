@@ -25,6 +25,9 @@
 #include "rpt_functions.h"
 #include "rpt_rig.h"
 #include "rpt_radio.h"
+#ifdef HAVE_GRLINUXCRYPTO
+#include "rpt_authentication.h"
+#endif
 
 /*!
  * \brief DTMF Tones - frequency pairs used to generate them along with the required timings
@@ -1121,6 +1124,31 @@ enum rpt_function_response function_cop(struct rpt *myrpt, char *param, char *di
 
 	if (!argc)
 		return DC_ERROR;
+
+#ifdef HAVE_GRLINUXCRYPTO
+	/* Check authentication if enabled */
+	if (myrpt->auth_config.mode != AUTH_DISABLED) {
+		struct signed_command signed_cmd;
+		uint32_t remote_node_id = 0;
+
+		/* Extract remote node ID from link if available */
+		if (mylink && mylink->name[0] >= '0' && mylink->name[0] <= '9') {
+			remote_node_id = (uint32_t)atoi(mylink->name);
+		}
+
+		/* Parse command into signed_command structure */
+		if (parse_cop_command(&signed_cmd, myatoi(argv[0]), param) == 0) {
+			/* Verify signature */
+			if (rpt_auth_verify_command(&myrpt->auth_config,
+						   &signed_cmd,
+						   remote_node_id) != 0) {
+				ast_log(LOG_SECURITY, "Authentication failed for COP %d from node %u\n",
+					myatoi(argv[0]), remote_node_id);
+				return DC_ERROR;
+			}
+		}
+	}
+#endif
 
 	switch (myatoi(argv[0])) {
 	case 1:					/* System reset */

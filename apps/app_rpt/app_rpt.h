@@ -20,6 +20,10 @@
 #include "../apps/app_rpt/mdc_decode.h"
 #endif
 
+#ifdef HAVE_GRLINUXCRYPTO
+#include "rpt_authentication.h"
+#endif
+
 /*! \note <sys/io.h> is not portable to all architectures, so don't call non-portable functions if we don't have them */
 #if __has_include(<sys/io.h>)
 #define HAVE_SYS_IO
@@ -1074,6 +1078,9 @@ struct rpt {
 	struct timeval paging;
 	char deferid;
 	struct timeval lastlinktime;
+#ifdef HAVE_GRLINUXCRYPTO
+	struct rpt_auth_config auth_config;
+#endif
 };
 
 struct nodelog {

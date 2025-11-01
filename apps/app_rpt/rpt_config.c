@@ -23,6 +23,9 @@
 #include <arpa/nameser.h> /* needed for dns - must be after app_rpt.h */
 #include "rpt_lock.h"
 #include "rpt_config.h"
+#ifdef HAVE_GRLINUXCRYPTO
+#include "rpt_authentication.h"
+#endif
 #include "rpt_manager.h"
 #include "rpt_utils.h" /* use myatoi */
 #include "rpt_rig.h" /* use setrem */
@@ -1332,6 +1335,12 @@ void load_rpt_vars(int n, int init)
 		}
 		vp = vp->next;
 	}
+
+#ifdef HAVE_GRLINUXCRYPTO
+	/* Load authentication configuration */
+	rpt_auth_load_config(&rpt_vars[n].auth_config, cfg);
+#endif
+
 	ast_mutex_unlock(&rpt_vars[n].lock);
 }
 
